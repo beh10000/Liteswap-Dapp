@@ -1,9 +1,12 @@
 unique_ids:
   assets:
+    Liteswap.png: '1739229379532534425330844.549'
+    main.js: '1739227813785246738113054.22366'
     standard-page.html: TOWD2JDFK547UC3UOQTKS6XTYPUQE6HC
     theme.css: 3CJS4IOYPZ6VF4455HV4ANK6D7ER537E
   forms:
     Form1: 2XZHP4T5HOBO4SKTAVDL575QNPESGHMB
+    wagmi: '1739227932982570392138606.8331'
   modules: {}
   scripts: {}
   server_modules: {}
