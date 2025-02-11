@@ -1,18 +1,51 @@
 components:
-- components: []
+- components:
+  - components: []
+    layout_properties: {grid_position: 'YDUAEW,HKMHBW'}
+    name: column_panel_1
+    properties: {}
+    type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}
   type: ColumnPanel
-- components: []
+- components:
+  - name: flow_panel_1
+    properties: {}
+    type: FlowPanel
   layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
   type: FlowPanel
-- layout_properties: {slot: title}
-  name: link_1
-  properties: {text: Liteswap}
-  type: Link
+- components:
+  - layout_properties: {}
+    name: image_1
+    properties:
+      height: 79.02734375
+      margin: ['-10', null, null, '4']
+      source: _/theme/Liteswap%20(2).png
+    type: Image
+  - layout_properties: {}
+    name: label_1
+    properties:
+      icon: ''
+      role: headline
+      spacing:
+        padding: ['8', null, null, null]
+      text: Liteswap
+    type: Label
+  - event_bindings: {click: menu_click}
+    name: link_all_pairs
+    properties: {text: All Pairs}
+    type: Link
+  - event_bindings: {click: menu_click}
+    name: link_my_positions
+    properties: {text: My Positions}
+    type: Link
+  layout_properties: {slot: title}
+  name: flow_panel_2
+  properties: {}
+  type: FlowPanel
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

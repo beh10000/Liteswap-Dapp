@@ -34,6 +34,7 @@ class wagmi(wagmiTemplate):
     reconnect(self.wagmiAdapter.wagmiConfig)
     self.activate()
     reconnect(self.wagmiAdapter.wagmiConfig)
+    print(self.state)
     
 
   def new_account(self, *args):
@@ -41,6 +42,7 @@ class wagmi(wagmiTemplate):
     network = None if state['caipAddress'] is None else state['caipAddress'].split(":")[1]
     state['network'] = network
     self.state = state
+    print(self.state)
     
   def refresh_display(self, refresh_user=True):
     
