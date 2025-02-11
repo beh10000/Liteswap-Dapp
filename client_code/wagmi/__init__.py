@@ -57,13 +57,22 @@ class wagmi(wagmiTemplate):
     self.contract_address = abb_add['address']
     arguments = {**abb_add, "functionName":'_pairIdCount'}
     self.pairIdCount = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+    tokens = ["GOLD", "SILVER", "BRONZE", "COPPER", "IRON"]
+    data = self.read_functions(self.contracts['Factory'], list([(t, []) for t in tokens]))
+    for t in tokens:
+      address = data[t]
+      self.contracts[t]={'abi':self.contracts["ERC20"]['abi'], 'address':address}
     
     #arguments = {**contract, "eventName":"GameEntered", "onLogs":self.log_detected}
     #watchContractEvent(self.wagmiAdapter.wagmiConfig, arguments)
     #watchBlocks(self.wagmiAdapter.wagmiConfig, 
               # {'blockTag':'latest', "onBlock":self.block_detected})
     
-    
+  def get_pair_count(self):
+    abb_add = self.contracts['Liteswap']
+    arguments = {**abb_add, "functionName":'_pairIdCount'}
+    self.pairIdCount = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+    return self.pairIdCount
   def block_detected(self, *args, **eargs):
     timestamp = args[0]['timestamp']
   
@@ -82,27 +91,65 @@ class wagmi(wagmiTemplate):
       
   
   
-  def call(self, contract_name, function_name, args=[]):
-    abb_add = self.contracts[contract_name]
+  def call(self, abb_add, function_name, args=[]):
+    
     ar = {**abb_add, "functionName":function_name, "args":args}
     try:
       a = anvil.js.await_promise(writeContract(self.wagmiAdapter.wagmiConfig, ar))
+      return True
     except Exception as e:
       Notification(str(e)).show()
-      
+      return False
+  def get_balance_approvals(self, token, user):
+    abb_add = {'abi':self.contracts['ERC20']['abi'], 'address':token}
+    response = self.read_functions(abb_add, [('symbol', []), ("balanceOf", [user]), ("allowance", [user, self.contracts['Liteswap']['address']])])
+    response['address']=token
+    return response
+  def get_balance(self, token, user):
+    abb_add = {'abi':self.contracts['ERC20']['abi'], 'address':token}
+    arguments = {**abb_add, "functionName":'balanceOf', 'args':[user]}
     
-  
-  def read_functions(self, contract_name, functions):
-    abb_add = self.contracts[contract_name]
+    self.balance = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+
+    return self.balance
+  def get_test_balances(self):
     calls = []
+    tokens = ["GOLD", "SILVER", "BRONZE", "COPPER", "IRON"]
+    for t in tokens:
+      calls.append({**self.contracts[t], 'functionName':'balanceOf', "args":[self.state['address']]})
+    bal = anvil.js.await_promise(readContracts(self.wagmiAdapter.wagmiConfig, {"contracts":calls}))
+    balances ={}
+    for t in tokens:
+      balances[t]=bal[tokens.index(t)]['result']      
+    print(balances)
+    return balances
+  def approve(self, token, spender, amount):
+    abb_add = {'abi':self.contracts["ERC20"]['abi'], 'address':token}
+    self.call(abb_add, 'approve', [spender, amount])
+    
+    arguments = {**abb_add, "functionName":'allowance', "args":[self.state['address'], spender]}
+    allowance = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+    print(allowance)
+    return allowance
+  def read_functions(self, abb_add, functions):
+    
+    calls = []
+    fn_names=[]
+    same_names = False
     for f in functions:
+      if f[0] in fn_names:
+        same_names=True
+      fn_names.append(f[0])
       calls.append({**abb_add, "functionName": f[0], "args":f[1]})
     
-    data = anvil.js.await_promise(readContracts(self.wagmiAdapter.wagmiConfig, calls))
+    data = anvil.js.await_promise(readContracts(self.wagmiAdapter.wagmiConfig, {"contracts":calls}))
+    print(data)
     result = {}
     n=0
     for d in data:
-      result[functions.index(n)[0]] = d['result']
+      key = "{}".format(functions[n]) if same_names else functions[n][0]
+      result[key] = d['result']
+      n+=1
     return result
 
     

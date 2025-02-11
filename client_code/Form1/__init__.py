@@ -12,6 +12,7 @@ class Form1(Form1Template):
     
     self.wagmi = wagmi(active_page = self)
     self.add_wallet_button()
+    
   def add_wallet_button(self):
     html = """
       <center id="c">
@@ -32,3 +33,7 @@ class Form1(Form1Template):
       pass
     self.content_panel.clear()
     self.content_panel.add_component(self.page)
+
+  def form_show(self, **event_args):
+    """This method is called when the form is shown on the page"""
+    self.menu_click(sender=self.link_all_pairs)

@@ -1,16 +1,37 @@
 components:
-- event_bindings: {click: button_faucet_click}
-  layout_properties: {grid_position: 'JBBTJL,USGNHV'}
-  name: button_faucet
-  properties: {text: Test Token Faucet}
-  type: Button
-- layout_properties: {grid_position: 'PYQLWV,LMCGTK'}
-  name: button_1
-  properties: {role: outlined-button, text: initialize pair}
-  type: Button
+- components:
+  - name: label_1
+    properties: {role: headline, text: Trading Pairs}
+    type: Label
+  - event_bindings: {click: button_initialize_click}
+    layout_properties: {}
+    name: button_initialize
+    properties:
+      align: center
+      icon: fa:plus-square-o
+      role: elevated-button
+      spacing:
+        margin: ['14', null, null, null]
+      text: New pair
+    type: Button
+  - event_bindings: {click: button_faucet_click}
+    layout_properties: {}
+    name: button_faucet
+    properties:
+      icon: fa:print
+      spacing:
+        margin: ['14', null, null, null]
+      text: Faucet
+    type: Button
+  layout_properties: {grid_position: 'KBNZUJ,KDVCVT'}
+  name: flow_panel_1
+  properties: {}
+  type: FlowPanel
 - layout_properties: {grid_position: 'KYRMTW,JJDANL'}
   name: repeating_panel_1
-  properties: {item_template: pair_feed.ItemTemplate1}
+  properties: {item_template: pair_feed.ItemTemplate1, role: null}
   type: RepeatingPanel
-container: {type: ColumnPanel}
+container:
+  properties: {role: max-width}
+  type: ColumnPanel
 is_package: true

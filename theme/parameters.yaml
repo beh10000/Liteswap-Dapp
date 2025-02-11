@@ -332,3 +332,5 @@ roles:
 - components: [TextBox, TextArea, DatePicker, DropDown]
   name: input-error
 - {name: card}
+- {name: max-width}
+- {name: overline}

@@ -1,7 +1,14 @@
 /**
  This CSS implements the Material Design 3 look and feel for Anvil apps.
  **/
+.anvil-role-max-width {
+  margin:auto;
+  max-width: 520px;
+}
 
+.anvil-role-overline {
+  border-top: 1px solid lightskyblue;
+}
 /* Stop panel-cols cutting off drop shadows */
 .anvil-panel-col {
   padding-bottom: 10px;
