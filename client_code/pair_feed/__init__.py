@@ -1,8 +1,8 @@
-from ._anvil_designer import Form2Template
+from ._anvil_designer import pair_feedTemplate
 from anvil import *
 
 
-class Form2(Form2Template):
+class pair_feed(pair_feedTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
