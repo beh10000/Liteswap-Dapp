@@ -1,5 +1,8 @@
 from ._anvil_designer import pair_feedTemplate
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 from ..wagmi import wagmi
 
 class pair_feed(pair_feedTemplate):
@@ -12,3 +15,7 @@ class pair_feed(pair_feedTemplate):
     print(self.wagmi.pairIdCount)
   
     # Any code you write here will run before the form opens.
+
+  def button_faucet_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    self.wagmi.call('Factory', 'faucet')

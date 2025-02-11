@@ -1,4 +1,9 @@
 components:
+- event_bindings: {click: button_faucet_click}
+  layout_properties: {grid_position: 'JBBTJL,USGNHV'}
+  name: button_faucet
+  properties: {text: Test Token Faucet}
+  type: Button
 - layout_properties: {grid_position: 'PYQLWV,LMCGTK'}
   name: button_1
   properties: {role: outlined-button, text: initialize pair}

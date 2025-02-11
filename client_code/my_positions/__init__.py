@@ -1,5 +1,8 @@
 from ._anvil_designer import my_positionsTemplate
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 
 
 class my_positions(my_positionsTemplate):

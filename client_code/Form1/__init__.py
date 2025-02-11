@@ -1,11 +1,15 @@
 from ._anvil_designer import Form1Template
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 from ..wagmi import wagmi
 from ..pair_feed import pair_feed
 class Form1(Form1Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
+    
     self.wagmi = wagmi(active_page = self)
     self.add_wallet_button()
   def add_wallet_button(self):

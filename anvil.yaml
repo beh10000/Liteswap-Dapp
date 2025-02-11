@@ -1,4 +1,19 @@
 allow_embedding: false
+db_schema:
+  contracts:
+    client: search
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: name
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: address
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: abi
+      type: simpleObject
+    server: full
+    title: contracts
 dependencies: []
 metadata: {description: Simple DEX, logo_img: 'asset:Liteswap.png', title: Liteswap}
 name: Liteswap

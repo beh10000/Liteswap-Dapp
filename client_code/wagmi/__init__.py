@@ -8,7 +8,6 @@ import anvil.js
 import anvil
 import time
 mod  = anvil.js.import_from("/_/theme/main.js")
-abi  = mod.abi
 core = anvil.js.import_from('@wagmi/core')
 watchContractEvent = core.watchContractEvent
 watchBlocks = core.watchBlocks
@@ -25,7 +24,10 @@ class wagmi(wagmiTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.active_page = properties['active_page']
-    self.abb_add = {'abi':abi, 'address':mod.contractAddress}
+    contracts = app_tables.contracts.search()
+    self.contracts = {}
+    for c in contracts:
+      self.contracts[c['name']]={"abi":c['abi'], 'address':c['address']}
     self.address = None
     self.signer = None
     self.state = {'caipAddress': None, 'address': None, 'isConnected': False, 'status': None, 'network':None}
@@ -34,7 +36,7 @@ class wagmi(wagmiTemplate):
     reconnect(self.wagmiAdapter.wagmiConfig)
     self.activate()
     reconnect(self.wagmiAdapter.wagmiConfig)
-    print(self.state)
+   
     
 
   def new_account(self, *args):
@@ -42,7 +44,6 @@ class wagmi(wagmiTemplate):
     network = None if state['caipAddress'] is None else state['caipAddress'].split(":")[1]
     state['network'] = network
     self.state = state
-    print(self.state)
     
   def refresh_display(self, refresh_user=True):
     
@@ -51,9 +52,10 @@ class wagmi(wagmiTemplate):
     
   def activate(self, *args, **event_args):
     self.modal.subscribeAccount(self.new_account)
-    self.contract_address = mod.contractAddress
     
-    arguments = {**self.abb_add, "functionName":'_pairIdCount'}
+    abb_add = self.contracts['Liteswap']
+    self.contract_address = abb_add['address']
+    arguments = {**abb_add, "functionName":'_pairIdCount'}
     self.pairIdCount = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
     
     #arguments = {**contract, "eventName":"GameEntered", "onLogs":self.log_detected}
@@ -80,19 +82,21 @@ class wagmi(wagmiTemplate):
       
   
   
-  def call(self, function_name, args):
-    
-    ar = {**self.abb_add, "functionName":function_name, "args":args}
+  def call(self, contract_name, function_name, args=[]):
+    abb_add = self.contracts[contract_name]
+    ar = {**abb_add, "functionName":function_name, "args":args}
     try:
       a = anvil.js.await_promise(writeContract(self.wagmiAdapter.wagmiConfig, ar))
     except Exception as e:
       Notification(str(e)).show()
+      
     
   
-  def read_functions(self, functions):
+  def read_functions(self, contract_name, functions):
+    abb_add = self.contracts[contract_name]
     calls = []
     for f in functions:
-      calls.append({**self.abb_add, "functionName": f[0], "args":f[1]})
+      calls.append({**abb_add, "functionName": f[0], "args":f[1]})
     
     data = anvil.js.await_promise(readContracts(self.wagmiAdapter.wagmiConfig, calls))
     result = {}
