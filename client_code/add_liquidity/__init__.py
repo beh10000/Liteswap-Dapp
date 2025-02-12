@@ -12,7 +12,6 @@ class add_liquidity(add_liquidityTemplate):
     self.item = properties['item']
     self.item['0 per 1']=self.item['reserve0']/self.item['reserve1']
     self.item['1 per 0']=1/self.item['0 per 1']
-    self.add_component(Label(text=self.item))
     self.wagmi = properties['wagmi']
     self.refresh()
   def refresh(self):
@@ -58,4 +57,22 @@ class add_liquidity(add_liquidityTemplate):
       self.refresh()
     else:
       Notification("Transaction not completed.").show()
+
+  def button_approve_0_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    token = self.item['token0']
+    
+    spender=self.wagmi.contracts['Liteswap']['address']
+    amount = self.input_raw
+    self.new_allowance = self.wagmi.approve(token, spender, amount)
+    self.refresh()
+  def button_approve_1_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    token = self.item['token1']
+    
+    spender=self.wagmi.contracts['Liteswap']['address']
+    amount = self.other_raw
+    self.new_allowance = self.wagmi.approve(token, spender, amount)
+    self.refresh()
+  
     
