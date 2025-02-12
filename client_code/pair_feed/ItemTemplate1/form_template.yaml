@@ -19,15 +19,30 @@ components:
         margin: ['0', null, '0', null]
         padding: ['0', null, '0', null]
     type: Label
-  - layout_properties: {grid_position: ''}
-    name: label_pair_ratio
+  - components:
+    - layout_properties: {slot: a}
+      name: label_pair_ratio
+      properties:
+        align: center
+        role: title
+        spacing:
+          margin: ['0', null, null, null]
+          padding: ['0', null, null, null]
+      type: Label
+    - event_bindings: {click: link_switch_click}
+      layout_properties: {slot: b}
+      name: link_switch
+      properties: {icon: 'fa:refresh', icon_align: left, role: body, spacing_above: none, spacing_below: none, text: ' '}
+      type: Link
+    layout_properties: {grid_position: 'MJYJRG,DJYSTV'}
+    name: rich_text_2
     properties:
       align: center
-      role: title
+      content: '{a} {b}'
       spacing:
-        margin: ['0', null, null, null]
-        padding: ['0', null, null, null]
-    type: Label
+        margin: ['0', null, '0', null]
+        padding: ['0', null, '0', null]
+    type: RichText
   - components:
     - layout_properties: {slot: a}
       name: label_token_a
@@ -57,7 +72,7 @@ components:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
       type: Label
-    layout_properties: {grid_position: ',undefined'}
+    layout_properties: {grid_position: ''}
     name: rich_text_1
     properties:
       align: center
@@ -72,14 +87,19 @@ components:
       visible: false
     type: RichText
   - event_bindings: {click: menu_click}
-    layout_properties: {grid_position: 'TYSDSS,UGDILP'}
-    name: button_trade
-    properties: {align: full, role: filled-button, text: Trade}
+    layout_properties: {grid_position: 'HVCPVO,MPAVJB'}
+    name: button_lp
+    properties: {align: full, role: elevated-button, text: Manage Liquidity}
     type: Button
   - event_bindings: {click: menu_click}
-    layout_properties: {grid_position: 'IHLPQK,NGIGKU'}
-    name: button_lp
-    properties: {align: full, role: outlined-button, text: Manage Liquidity}
+    layout_properties: {grid_position: 'ZUBTKW,MTUSWH'}
+    name: button_limit_order
+    properties: {align: full, role: tonal-button, text: Limit Order}
+    type: Button
+  - event_bindings: {click: menu_click}
+    layout_properties: {grid_position: 'IMAUIC,YSNJEA'}
+    name: button_trade
+    properties: {align: full, role: filled-button, text: SWAP}
     type: Button
   layout_properties: {grid_position: 'MNIIUK,RNCHPC'}
   name: outlined_card_1

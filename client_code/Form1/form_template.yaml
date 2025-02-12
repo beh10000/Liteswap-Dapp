@@ -26,7 +26,8 @@ components:
   - layout_properties: {}
     name: label_1
     properties:
-      font_size: 40
+      bold: true
+      font_size: 30
       icon: _/theme/Liteswap%20(2).png
       icon_align: left_edge
       role: headline

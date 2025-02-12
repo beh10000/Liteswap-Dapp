@@ -3,30 +3,31 @@ components:
   - name: label_1
     properties: {role: headline, text: Trading Pairs}
     type: Label
-  - event_bindings: {click: button_initialize_click}
-    layout_properties: {}
-    name: button_initialize
-    properties:
-      align: center
-      icon: fa:plus-square-o
-      role: elevated-button
-      spacing:
-        margin: ['14', null, null, null]
-      text: New pair
-    type: Button
   - event_bindings: {click: button_faucet_click}
     layout_properties: {}
     name: button_faucet
     properties:
-      icon: fa:print
+      icon: fa:shower
       spacing:
         margin: ['14', null, null, null]
-      text: Faucet
+      text: Test Token Faucet
     type: Button
   layout_properties: {grid_position: 'KBNZUJ,KDVCVT'}
   name: flow_panel_1
   properties: {}
   type: FlowPanel
+- event_bindings: {click: button_initialize_click}
+  layout_properties: {grid_position: 'LECMPH,OQEJYG'}
+  name: button_initialize
+  properties:
+    align: full
+    font_size: 24
+    icon: fa:plus-square-o
+    role: outlined-button
+    spacing:
+      margin: ['14', null, null, null]
+    text: New pair
+  type: Button
 - layout_properties: {grid_position: 'KYRMTW,JJDANL'}
   name: repeating_panel_1
   properties: {item_template: pair_feed.ItemTemplate1, role: null}

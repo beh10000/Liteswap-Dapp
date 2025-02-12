@@ -1,9 +1,18 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'IFEQIM,FDPDEV'}
-    name: label_symbol_from
-    properties: {bold: true, role: title}
-    type: Label
+  - components:
+    - layout_properties: {slot: a}
+      name: label_symbol_from_copy
+      properties: {bold: true, role: title, text: From}
+      type: Label
+    - layout_properties: {slot: b}
+      name: label_symbol_from
+      properties: {bold: true, role: title}
+      type: Label
+    layout_properties: {grid_position: 'ECUWRZ,QKIRKZ'}
+    name: rich_text_3
+    properties: {content: '{a} {b}', format: restricted_html}
+    type: RichText
   - event_bindings: {change: text_box_from_change}
     layout_properties: {grid_position: 'CTOFCU,ZXOPJN'}
     name: text_box_from
@@ -33,12 +42,21 @@ components:
   - event_bindings: {click: button_invert_click}
     layout_properties: {grid_position: 'QUPFNE,NTSKFW'}
     name: button_invert
-    properties: {icon: 'fa:exchange', icon_align: top, text: ''}
+    properties: {icon: 'fa:refresh', icon_align: top, text: ''}
     type: Button
-  - layout_properties: {grid_position: 'GUYWHG,HYJPYI'}
-    name: label_symbol_to
-    properties: {bold: true, role: title}
-    type: Label
+  - components:
+    - layout_properties: {slot: v}
+      name: label_symbol_to
+      properties: {bold: true, role: title}
+      type: Label
+    - layout_properties: {slot: a}
+      name: label_symbol_to_copy
+      properties: {bold: true, role: title, text: To}
+      type: Label
+    layout_properties: {grid_position: 'PYZYUL,ULUYWX'}
+    name: rich_text_4
+    properties: {content: '{a} {v}'}
+    type: RichText
   - layout_properties: {grid_position: 'LEKYKG,OOAUWS'}
     name: text_box_to
     properties: {enabled: false, role: outlined, type: number}
@@ -81,7 +99,7 @@ components:
     type: Button
   layout_properties: {grid_position: 'WCOKCQ,PJPQIL'}
   name: column_panel_1
-  properties: {col_widths: '{"YMJVCU":50}', role: null}
+  properties: {col_widths: '{}', role: null}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

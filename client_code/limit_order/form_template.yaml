@@ -1,29 +1,23 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'DWCWGW,ZRVRIA'}
-    name: label_1
-    properties: {role: headline, text: Limit Order}
-    type: Label
-  - layout_properties: {grid_position: 'KTAOGB,IDMKBJ'}
-    name: label_token_0
-    properties: {text: Offer Token}
-    type: Label
-  - layout_properties: {grid_position: 'RGKFRT,YNNHPU'}
-    name: drop_down_1
-    properties: {role: outlined}
-    type: DropDown
-  - layout_properties: {grid_position: 'RCXUMJ,FBYYOI'}
-    name: label_token_0_copy
-    properties: {text: Offer Amount}
-    type: Label
-  - layout_properties: {grid_position: 'CTOFCU,JSELSW'}
-    name: outlined_1
-    properties: {role: outlined}
+  - components:
+    - layout_properties: {slot: a}
+      name: label_symbol_from_copy
+      properties: {bold: true, role: title, text: From}
+      type: Label
+    - layout_properties: {slot: b}
+      name: label_symbol_from
+      properties: {bold: true, role: title}
+      type: Label
+    layout_properties: {grid_position: 'ECUWRZ,QKIRKZ'}
+    name: rich_text_3
+    properties: {content: '{a} {b}', format: restricted_html}
+    type: RichText
+  - event_bindings: {change: text_box_from_change}
+    layout_properties: {grid_position: 'CTOFCU,ZXOPJN'}
+    name: text_box_from
+    properties: {role: outlined, type: number}
     type: TextBox
-  - layout_properties: {grid_position: 'CTOFCU,VAJBPL'}
-    name: button_1
-    properties: {text: Approve}
-    type: Button
   - components:
     - layout_properties: {slot: a}
       name: label_balance_from
@@ -32,32 +26,45 @@ components:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
       type: Label
+    - layout_properties: {slot: b}
+      name: label_allowance_from
+      properties: {}
+      type: Label
+    - event_bindings: {click: link_allowance_click}
+      layout_properties: {slot: c}
+      name: link_allowance
+      properties: {text: Manage Allowance}
+      type: Link
     layout_properties: {grid_position: 'TMIQCG,ZWJKHJ'}
     name: rich_text_2
-    properties: {content: '<b>Balance:</b>{a}'}
+    properties: {content: '<b>Balance: </b>{a}<br><b>Allowance: </b> {b} {c}', format: restricted_html}
     type: RichText
-  - layout_properties: {grid_position: 'FJSWKE,UXJKYA'}
-    name: label_token_1
-    properties: {text: Receive Amount}
-    type: Label
-  - layout_properties: {grid_position: 'LPFGHL,ZJEZAN'}
-    name: outlined_1_copy
-    properties: {enabled: false, role: outlined}
-    type: TextBox
-  - layout_properties: {grid_position: 'LPFGHL,GJYYQZ'}
-    name: button_1_copy
-    properties: {text: Approve}
+  - event_bindings: {click: button_invert_click}
+    layout_properties: {grid_position: 'QUPFNE,NTSKFW'}
+    name: button_invert
+    properties: {icon: 'fa:refresh', icon_align: top, text: ''}
     type: Button
   - components:
-    - layout_properties: {slot: q}
-      name: label_exchange_0
-      properties:
-        spacing:
-          margin: ['0', null, '0', null]
-          padding: ['0', null, '0', null]
+    - layout_properties: {slot: v}
+      name: label_symbol_to
+      properties: {bold: true, role: title}
       type: Label
-    - layout_properties: {slot: w}
-      name: label_exchange_1
+    - layout_properties: {slot: a}
+      name: label_symbol_to_copy
+      properties: {bold: true, role: title, text: To}
+      type: Label
+    layout_properties: {grid_position: 'PYZYUL,ULUYWX'}
+    name: rich_text_4
+    properties: {content: '{a} {v}'}
+    type: RichText
+  - event_bindings: {change: text_box_to_change}
+    layout_properties: {grid_position: 'LEKYKG,OOAUWS'}
+    name: text_box_to
+    properties: {enabled: true, role: outlined, type: number}
+    type: TextBox
+  - components:
+    - layout_properties: {slot: a}
+      name: label_balance_to
       properties:
         spacing:
           margin: ['0', null, '0', null]
@@ -65,15 +72,43 @@ components:
       type: Label
     layout_properties: {grid_position: 'SURAYG,DOGFUK'}
     name: rich_text_2_copy
-    properties: {content: '<b>Implied Exchange Rate: >{q} = {w}', format: restricted_html}
+    properties: {content: '<b>Balance:</b>{a}<br>', format: restricted_html}
     type: RichText
-  - layout_properties: {grid_position: 'ZIOCQV,DQERBZ'}
-    name: button_2
-    properties: {role: elevated-button, text: Place Limit Order}
+  - components:
+    - layout_properties: {slot: a}
+      name: label_exchange_0
+      properties:
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: Label
+    - layout_properties: {slot: b}
+      name: label_exchange_1
+      properties:
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: Label
+    - layout_properties: {}
+      name: label_1
+      properties: {text: 'Important: Output amount must be more than you would get swapping in pool right now.'}
+      type: Label
+    layout_properties: {grid_position: 'HKDYRM,FIZHFJ'}
+    name: rich_text_1
+    properties: {content: '<b>Order Fill Target: </b> {a} = {b}', format: restricted_html}
+    type: RichText
+  - event_bindings: {click: button_swap_click}
+    layout_properties: {grid_position: 'HOQWVZ,UCDYQH'}
+    name: button_swap
+    properties: {role: elevated-button, text: Place limit order}
     type: Button
-  layout_properties: {grid_position: 'ZLJRKW,UPOAJT'}
+  - layout_properties: {grid_position: 'AKCMFQ,QKOZPT'}
+    name: column_panel_active_orders
+    properties: {}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'WCOKCQ,PJPQIL'}
   name: column_panel_1
-  properties: {col_widths: '{"VAJBPL":12,"JSELSW":40,"ZJEZAN":46,"GJYYQZ":14}', role: card}
+  properties: {col_widths: '{}', role: null}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

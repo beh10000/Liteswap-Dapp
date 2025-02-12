@@ -18,15 +18,15 @@ class pair_feed(pair_feedTemplate):
     self.count = self.wagmi.get_pair_count()
     functions = []
     for i in range(1, self.count):
-      print(i)
+      
       #read_functions(self, abb_add, functions)
       function = ("pairs", [i])
       functions.append(function)
-    print(functions)
+    
     data = self.wagmi.read_functions(self.wagmi.contracts['Liteswap'], functions)
     
     pairs = []
-    print(data)
+    
     n=1
     for k, d in data.items():
       pair = {"token0":d[0], 'token1':d[1], "reserve0":d[2], 'reserve1':d[3], 'shares':d[4], 'pairId':n}
@@ -39,11 +39,11 @@ class pair_feed(pair_feedTemplate):
 
   def button_faucet_click(self, **event_args):
     a = anvil.js.await_promise(self.wagmi.call(self.wagmi.contracts['Factory'], 'faucet'))
-    print(dir(a))
+    
 
   def button_initialize_click(self, **event_args):
     """This method is called when the button is clicked"""
     
     self.init_liquidity_page = initialize_liquidity(wagmi=self.wagmi)
-    alert(self.init_liquidity_page, large=True, buttons=[])
+    alert(self.init_liquidity_page, large=True, buttons=[], title="Create Liquidity Pool")
     

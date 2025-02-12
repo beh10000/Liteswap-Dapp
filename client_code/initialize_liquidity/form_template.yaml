@@ -1,97 +1,105 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'DWCWGW,ZRVRIA'}
-    name: label_1
-    properties: {role: headline, text: Create Pair}
-    type: Label
   - components:
     - layout_properties: {grid_position: 'SWPHZB,AUNRHK'}
       name: label_token_0
-      properties: {text: Token A Address}
+      properties: {role: title, text: Token A}
       type: Label
     - event_bindings: {change: drop_down_change}
       layout_properties: {grid_position: 'UKGUVO,KYZRVL'}
       name: drop_down_1
-      properties: {include_placeholder: true, placeholder: Select Token, role: outlined}
+      properties: {align: full, include_placeholder: true, placeholder: Select Token, role: outlined}
       type: DropDown
     - event_bindings: {change: text_box_1_change}
       layout_properties: {grid_position: 'QKFIQA,CBWMCY'}
       name: text_box_1
-      properties: {enabled: false, role: null}
+      properties: {enabled: true, placeholder: Token A Address, role: outlined, visible: true}
       type: TextBox
+    - event_bindings: {change: text_box_amount_1_change}
+      layout_properties: {grid_position: 'YCJHIM,WEKINR'}
+      name: text_box_amount_1
+      properties: {enabled: false, placeholder: Amount, role: outlined, type: number}
+      type: TextBox
+    - event_bindings: {click: button_approve_1_click}
+      layout_properties: {grid_position: 'SXZPKN,OWHKGY'}
+      name: button_approve_1
+      properties: {align: full, role: elevated-button, text: Approve}
+      type: Button
+    - components:
+      - layout_properties: {slot: a}
+        name: label_balance_1
+        properties:
+          spacing:
+            margin: ['0', null, '0', null]
+            padding: ['0', null, '0', null]
+          text: '---'
+        type: Label
+      - layout_properties: {slot: b}
+        name: label_approved_a
+        properties: {text: '---'}
+        type: Label
+      layout_properties: {grid_position: 'CNQRTT,QAFEDZ'}
+      name: rich_text_a
+      properties: {content: '<b>Balance:</b>{a}<br><b>Approved: </b>{b}', format: restricted_html, visible: true}
+      type: RichText
     layout_properties: {grid_position: 'CJTLEQ,ALHYSU'}
     name: column_panel_2
     properties: {}
     type: ColumnPanel
   - components:
-    - layout_properties: {grid_position: 'OUAEOL,OHNLUL'}
-      name: label_token_0_copy
-      properties: {text: Amount}
+    - layout_properties: {grid_position: 'DFZPZA,AOKNRS'}
+      name: label_token_1
+      properties: {role: title, text: Token B}
       type: Label
-    - event_bindings: {change: text_box_amount_1_change}
-      layout_properties: {grid_position: 'WWLDPI,XXTZHU'}
-      name: text_box_amount_1
-      properties: {enabled: false, role: outlined, type: number}
+    - event_bindings: {change: drop_down_change}
+      layout_properties: {grid_position: 'HLYZLP,CIYRCL'}
+      name: drop_down_2
+      properties: {include_placeholder: true, placeholder: Select Token, role: outlined}
+      type: DropDown
+    - event_bindings: {change: text_box_2_change}
+      layout_properties: {grid_position: 'EIWRIH,NSBKAN'}
+      name: text_box_2
+      properties: {enabled: true, placeholder: Token B Address, role: outlined, visible: true}
       type: TextBox
-    - event_bindings: {click: button_approve_1_click}
-      layout_properties: {grid_position: 'WXAYMS,OUUTIA'}
-      name: button_approve_1
+    - event_bindings: {change: text_box_amount_2_change}
+      layout_properties: {grid_position: 'NELJZX,MYWJFJ'}
+      name: text_box_amount_2
+      properties: {enabled: false, placeholder: Amount B, role: outlined, type: number}
+      type: TextBox
+    - event_bindings: {click: button_approve_2_click}
+      layout_properties: {grid_position: 'JMEBQV,LJTHEB'}
+      name: button_approve_2
       properties: {align: full, role: elevated-button, text: Approve}
       type: Button
+    - components:
+      - layout_properties: {slot: a}
+        name: label_balance_2
+        properties:
+          spacing:
+            margin: ['0', null, '0', null]
+            padding: ['0', null, '0', null]
+          text: '---'
+        type: Label
+      - layout_properties: {slot: b}
+        name: label_approved_b
+        properties: {text: '---'}
+        type: Label
+      layout_properties: {grid_position: 'VAUNBY,PZWGDH'}
+      name: rich_text_b
+      properties: {content: '<b>Balance:</b>{a}<br><b>Approved: </b>{b}', format: restricted_html}
+      type: RichText
     layout_properties: {grid_position: 'CJTLEQ,DCHCBV'}
     name: column_panel_3
     properties: {}
     type: ColumnPanel
   - components:
-    - layout_properties: {slot: a}
-      name: label_balance_1
-      properties:
-        spacing:
-          margin: ['0', null, '0', null]
-          padding: ['0', null, '0', null]
-      type: Label
-    layout_properties: {grid_position: 'TMIQCG,ZWJKHJ'}
-    name: rich_text_2
-    properties: {content: '<b>Balance:</b>{a}', format: restricted_html}
-    type: RichText
-  - layout_properties: {grid_position: 'GNLXBP,OPPQDO'}
-    name: label_token_1
-    properties: {text: Token B}
-    type: Label
-  - event_bindings: {change: drop_down_change}
-    layout_properties: {grid_position: 'FUOIRK,KMDZUP'}
-    name: drop_down_2
-    properties: {include_placeholder: true, placeholder: Select Token, role: outlined}
-    type: DropDown
-  - event_bindings: {change: text_box_2_change}
-    layout_properties: {grid_position: 'FPCFYL,DHEYGI'}
-    name: text_box_2
-    properties: {role: null, visible: false}
-    type: TextBox
-  - event_bindings: {change: text_box_amount_2_change}
-    layout_properties: {grid_position: 'LPFGHL,ZJEZAN'}
-    name: text_box_amount_2
-    properties: {enabled: false, role: outlined, type: number}
-    type: TextBox
-  - event_bindings: {click: button_approve_2_click}
-    layout_properties: {grid_position: 'LPFGHL,TOUGTA'}
-    name: button_approve_2
-    properties: {text: Approve}
-    type: Button
-  - components:
-    - layout_properties: {slot: a}
-      name: label_balance_2
-      properties:
-        spacing:
-          margin: ['0', null, '0', null]
-          padding: ['0', null, '0', null]
-      type: Label
     - layout_properties: {slot: q}
       name: label_exchange_0
       properties:
         spacing:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
+        text: '---'
       type: Label
     - layout_properties: {slot: w}
       name: label_exchange_1
@@ -99,19 +107,27 @@ components:
         spacing:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
+        text: '---'
       type: Label
-    layout_properties: {grid_position: 'SURAYG,DOGFUK'}
-    name: rich_text_2_copy
-    properties: {content: '<b>Balance:</b>{a}<br><b>Exchange Rate: >{q} = {w}', format: restricted_html}
+    layout_properties: {grid_position: 'IPMMUF,ZXWQTH'}
+    name: rich_text_rate
+    properties:
+      align: center
+      content: '<b>Exchange Rate: </b>{q} = {w}'
+      format: restricted_html
+      spacing:
+        margin: [null, null, '0', null]
+        padding: [null, null, '0', null]
+      visible: false
     type: RichText
   - event_bindings: {click: button_initialize_click}
     layout_properties: {grid_position: 'ZIOCQV,DQERBZ'}
     name: button_initialize
-    properties: {role: elevated-button, text: Initialize Pair}
+    properties: {enabled: true, role: filled-button, text: Initialize Pair, visible: true}
     type: Button
   layout_properties: {grid_position: 'DVZJGP,LLMUAF'}
   name: column_panel_1
-  properties: {col_widths: '{"ZJEZAN":46}', role: card}
+  properties: {col_widths: '{}', role: null}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

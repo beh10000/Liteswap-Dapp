@@ -18,8 +18,8 @@ class swap(swapTemplate):
     self.allowance_1=0
     self.refresh(self.invert)
   def refresh(self, invert):
-    self.label_symbol_from.text = "From {}".format(self.item['token0_symbol'] if not invert else self.item['token1_symbol'])
-    self.label_symbol_to.text= "To {}".format(self.item['token1_symbol'] if not invert else self.item['token0_symbol'])
+    self.label_symbol_from.text = "{}".format(self.item['token0_symbol'] if not invert else self.item['token1_symbol'])
+    self.label_symbol_to.text= "{}".format(self.item['token1_symbol'] if not invert else self.item['token0_symbol'])
     self.label_exchange_0.text = "{:.5f} {}".format(self.item['0 per 1'] if not invert else self.item['1 per 0'], self.label_symbol_from.text)
     self.label_exchange_1.text = "1 {}".format(self.label_symbol_to.text)
     self.label_balance_from.text =  self.item['token0_symbol'] if not invert else self.item['token1_symbol']
@@ -91,9 +91,15 @@ class swap(swapTemplate):
     """This method is called when the button is clicked"""
     event_args['sender'].enabled=False
     args = [self.pairId, self.token_in, self.token_in_amount, int(self.amount_out*90/100)]
-    print(args)
+    
     a = self.wagmi.call(self.wagmi.contracts['Liteswap'], 'swap', args)
     if a:
+      self.new_item = self.wagmi.get_pair_data(self.item['pairId'])
+      self.item['0 per 1'] = self.new_item[2]/self.new_item[3]
+      self.item['1 per 0']=1/self.item['0 per 1']
+      self.item['reserve0']=self.new_item[2]
+      self.item['reserve1']=self.new_item[3]
+      
       self.refresh(self.invert)
       self.text_box_from.text=None
       self.text_box_from_change(sender=self.text_box_from)

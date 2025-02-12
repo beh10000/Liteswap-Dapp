@@ -73,6 +73,12 @@ class wagmi(wagmiTemplate):
     arguments = {**abb_add, "functionName":'_pairIdCount'}
     self.pairIdCount = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
     return self.pairIdCount
+  def get_pair_data(self, pairId):
+    abb_add = self.contracts['Liteswap']
+    arguments = {**abb_add, "functionName":'pairs', 'args':[pairId]}
+    pair_data = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+    
+    return pair_data
   def block_detected(self, *args, **eargs):
     timestamp = args[0]['timestamp']
   
@@ -105,6 +111,12 @@ class wagmi(wagmiTemplate):
     response = self.read_functions(abb_add, [('symbol', []), ("balanceOf", [user]), ("allowance", [user, self.contracts['Liteswap']['address']])])
     response['address']=token
     return response
+  def get_shares(self, pairId, user):
+    abb_add = self.contracts['Liteswap']
+    arguments = {**abb_add, "functionName": "liquidityProviderPositions", "args":[pairId, user]}
+    shares = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+    
+    return shares[0]
   def get_balance(self, token, user):
     abb_add = {'abi':self.contracts['ERC20']['abi'], 'address':token}
     arguments = {**abb_add, "functionName":'balanceOf', 'args':[user]}
@@ -121,7 +133,7 @@ class wagmi(wagmiTemplate):
     balances ={}
     for t in tokens:
       balances[t]=bal[tokens.index(t)]['result']      
-    print(balances)
+    
     return balances
   def approve(self, token, spender, amount):
     abb_add = {'abi':self.contracts["ERC20"]['abi'], 'address':token}
@@ -129,7 +141,7 @@ class wagmi(wagmiTemplate):
     
     arguments = {**abb_add, "functionName":'allowance', "args":[self.state['address'], spender]}
     allowance = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
-    print(allowance)
+    
     return allowance
   def read_functions(self, abb_add, functions):
     
@@ -143,7 +155,7 @@ class wagmi(wagmiTemplate):
       calls.append({**abb_add, "functionName": f[0], "args":f[1]})
     
     data = anvil.js.await_promise(readContracts(self.wagmiAdapter.wagmiConfig, {"contracts":calls}))
-    print(data)
+    
     result = {}
     n=0
     for d in data:
@@ -190,5 +202,53 @@ class wagmi(wagmiTemplate):
     contract = ethers.Contract(mod.contractAddress, abi, provider)
     arg = [pairId, address] if address is not None else [pairId]
     swap_events =contract.filters.Swap(*arg)
-  
+  def get_limit_orders(self, pairId, address=None):
+    RPC_URL = [n['rpcUrls']['default']['http'][0] for n in self.wagmiAdapter.networks if int(self.state['network']) == n['id']][0]
+    provider = ethers.JsonRpcProvider(RPC_URL)
+    contract = ethers.Contract(self.contracts['Liteswap']['address'], self.contracts['Liteswap']['abi'], provider)
+    arg = [pairId, None, address] if address is not None else [pairId]
+    place_filter = contract.filters.LimitOrderPlaced(*arg)
+
+    
+    place_events = anvil.js.await_promise(contract.queryFilter(place_filter))
+    
+    
+    adds = [e['args'] for e in place_events]
+    
+    limits = []
+    for l in adds:
+      d = {}
+      d['pairId']=l[0]
+      d['orderId']=l[1]
+      d['maker']=l[2]
+      d['offerToken']=l[3]
+      d['desiredToken']=l[4]
+      d['offerAmount']=l[5]
+      d['desiredAmount']=l[6]
+      limits.append(d)
+    return limits
+  def get_limit_order(self, pairId, orderId):
+    abb_add = self.contracts['Liteswap']
+    arguments = {**abb_add, "functionName":'limitOrders', "args":[pairId, orderId]}
+    o = anvil.js.await_promise(readContract(self.wagmiAdapter.wagmiConfig, arguments))
+    
+    limit_order={}
+    
+    limit_order['maker']=o[0]
+    limit_order['offerToken']=o[1]
+    limit_order['desiredToken']=o[2]
+    limit_order['offerAmount']=o[3]
+    limit_order['desiredAmount']=o[4]
+    limit_order['active']=o[5]
+    return limit_order
+    '''struct LimitOrder {
+        address maker;
+        address offerToken;
+        address desiredToken;
+        uint256 offerAmount;
+        uint256 desiredAmount;
+        bool active;
+    }'''
+    
+    
   
