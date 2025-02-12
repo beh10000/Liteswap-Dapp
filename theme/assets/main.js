@@ -29,7 +29,7 @@ const customNetwork = defineChain({
   },
   
 })
-export const networks = [ customNetwork, sepolia]
+export const networks = [ sepolia]
 const wagmiAdapter = new WagmiAdapter({
   projectId,
   networks
